@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<style>
+#sciverse{
+    display:none;
+}
+
+</style>
+<html>
+     <head>
+         <title>An Example SciVerse Scopus Search Javascript API Transaction</title>
+                <!-- SECTION 1 : Initial configuration -->
+                    <link REL="stylesheet" TYPE="text/css" href="http://searchapi.scopus.com/stylesheets/css_sciverse_list_hilight.css"/>
+<script type="text/javascript" src="js/d3.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+                        <script type="text/javascript" src="http://api.elsevier.com/javascript/scopussearch.jsp"></script>
+                        <script type="text/javascript">
+                            // <!-- SECTION 2 : Call back -->
+                               callback = function(){ document.sciverseForm.searchButton.disabled = false; }
+                            // <!-- SECTION 3 : Running Search -->
+                               runSearch = function(){
+                               document.sciverseForm.searchButton.disabled = true;
+                               varSearchObj = new searchObj();
+                               // var searchString="memory"
+                               // varSearchObj.setSearch(searchString);
+                              varSearchObj.setSearch(document.sciverseForm.searchString.value);                               
+                               sciverse.search(varSearchObj);
+                               }
+
+                        </script>
+                <!-- SECTION 4 : Setting defaults -->
+                        <script type="text/javascript">
+                sciverse.setApiKey("2db978a7cd12248e8f63b2aac099ef26");
+                sciverse.setCallback(callback);
+                        </script>
+     </head>
+<!-- SECTION 5 : Rendering page -->
+     <body>
+         <!-- <h2>Search Form:</h2> -->
+                  <form name="sciverseForm" onsubmit="return false">
+                      <input type="text" name="searchString"/>
+                      <button onClick="runSearch()" name="searchButton"/>SEARCH</button>
+                  </form>
+         <!-- <h2>Returned sciverse Content:</h2> -->
+                  <div id="sciverse">
+                      None.
+                  </div>
+     </body>
+<script type="text/javascript">
+var b=0;
+var what;
+var data;
+$( document ).ready(function() {
+$("body").keypress(function(){
+    (b+=1);
+    if (b==8){
+      what = sciverse.getSearchResults()
+      data = what.results;
+    }
+  })
+})
+
+</script>
+</html>
